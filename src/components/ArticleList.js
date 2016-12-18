@@ -27,10 +27,12 @@ export default class ArticleList extends Component {
     }
 
     renderCommentList(comments) {
+        //лучше эту проверку в CommentList делать
         if (!comments) {
             return;
         }
 
+        //логичнее CommentList внутри Article использовать
         return <CommentList comments={comments}/>
     }
 
