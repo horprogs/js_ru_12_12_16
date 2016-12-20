@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Comment from './Comment';
 
 export default class CommentList extends Component {
@@ -6,7 +6,13 @@ export default class CommentList extends Component {
         isShow: false
     }
 
+    comments = this.props.comments;
+
     render() {
+        if (!this.comments) {
+            return false;
+        }
+
         return (
             <div>
                 {this.getCommentsList()}
@@ -25,9 +31,7 @@ export default class CommentList extends Component {
         if (!this.state.isShow) {
             return;
         }
-
-        const { comments } = this.props;
-        const list = comments.map(item =>
+        const list = this.comments.map(item =>
             <li key={item.id}>
                 <Comment user={item.user} text={item.text}/>
             </li>
@@ -45,4 +49,8 @@ export default class CommentList extends Component {
             <a href="#" onClick={this.toggleComments} className="btn btn--hide">Hide comments</a> :
             <a href="#" onClick={this.toggleComments} className="btn btn--show">Show comments</a>;
     }
+}
+
+CommentList.propTypes = {
+    comments: PropTypes.array
 }

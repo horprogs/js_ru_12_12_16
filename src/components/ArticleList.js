@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Article from './Article';
-import CommentList from './CommentList';
+import accordion from '../decorators/accordion';
 
-export default class ArticleList extends Component {
+class ArticleList extends Component {
 
     render() {
         return (
@@ -20,19 +20,16 @@ export default class ArticleList extends Component {
 
         return articles.map(article =>
             <li key={article.id}>
-                <Article article={article}/>
-                {this.renderCommentList(article.comments)}
+                <Article article={article}
+                         isOpen={this.state.openArticleId == article.id}
+                />
             </li>
         );
     }
+}
 
-    renderCommentList(comments) {
-        if (!comments) {
-            return;
-        }
+export default accordion(ArticleList);
 
-        return <CommentList comments={comments}/>
-    }
-
-
+ArticleList.propTypes = {
+    articles: PropTypes.array.isRequired
 }
