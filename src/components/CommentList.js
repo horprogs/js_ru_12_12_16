@@ -1,56 +1,39 @@
-import React, {Component, PropTypes} from 'react';
-import Comment from './Comment';
+import React, { Component, PropTypes } from 'react'
+import Comment from './Comment'
+import toggleOpen from '../decorators/toggleOpen'
 
-export default class CommentList extends Component {
-    state = {
-        isShow: false
+class CommentList extends Component {
+    static propTypes = {
+        comments: PropTypes.array,
+        isOpen: PropTypes.bool,
+        toggleOpen: PropTypes.func
+    }
+    static defaultProps = {
+        comments: []
     }
 
-    comments = this.props.comments;
-
     render() {
-        if (!this.comments) {
-            return false;
-        }
-
         return (
             <div>
-                {this.getCommentsList()}
-                {this.renderButton()}
+                {this.getLink()}
+                {this.getBody()}
             </div>
         )
     }
 
-    toggleComments = () => {
-        this.setState({
-            isShow: !this.state.isShow
-        })
+    getLink() {
+        return <a href="#" onClick = {this.props.toggleOpen}>
+            {this.props.isOpen ? 'hide' : 'show'} comments
+        </a>
     }
 
-    getCommentsList() {
-        if (!this.state.isShow) {
-            return;
-        }
-        const list = this.comments.map(item =>
-            <li key={item.id}>
-                <Comment user={item.user} text={item.text}/>
-            </li>
-        );
-
-        return (
-            <ul>
-                {list}
-            </ul>
-        )
-    }
-
-    renderButton = () => {
-        return (this.state.isShow) ?
-            <a href="#" onClick={this.toggleComments} className="btn btn--hide">Hide comments</a> :
-            <a href="#" onClick={this.toggleComments} className="btn btn--show">Show comments</a>;
+    getBody() {
+        const { comments, isOpen } = this.props
+        if (!isOpen) return null
+        if (!comments.length) return <p>No comments yet</p>
+        const commentItems = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
+        return <ul>{commentItems}</ul>
     }
 }
 
-CommentList.propTypes = {
-    comments: PropTypes.array
-}
+export default toggleOpen(CommentList)
