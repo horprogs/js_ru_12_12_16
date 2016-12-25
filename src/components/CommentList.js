@@ -22,17 +22,32 @@ class CommentList extends Component {
     }
 
     getLink() {
-        return <a href="#" onClick = {this.props.toggleOpen}>
+        return <a href="#" onClick={this.props.toggleOpen}>
             {this.props.isOpen ? 'hide' : 'show'} comments
         </a>
+    }
+
+    getForm() {
+        return (
+            <form>
+                <input type="text" required placeholder="Enter your name"/>
+                <br/><br/>
+                <textarea placeholder="Enter your message"></textarea>
+                <button className="btn btn--primary">Send</button>
+            </form>
+        )
     }
 
     getBody() {
         const { comments, isOpen } = this.props
         if (!isOpen) return null
         if (!comments.length) return <p>No comments yet</p>
-        const commentItems = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
-        return <ul>{commentItems}</ul>
+        const commentItems = comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)
+        return (
+            <div>
+                <ul>{commentItems}</ul>
+                {this.getForm()}
+            </div>)
     }
 }
 
