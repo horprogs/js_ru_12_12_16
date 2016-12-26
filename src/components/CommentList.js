@@ -28,6 +28,8 @@ class CommentList extends Component {
     }
 
     getForm() {
+        //Значения полей нужно хранить в стейте
+        //+ форма заслуживает отдельного компонента
         return (
             <form>
                 <input type="text" required placeholder="Enter your name"/>
