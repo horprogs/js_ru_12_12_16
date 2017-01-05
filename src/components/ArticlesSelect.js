@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
+import { filterArticle } from '../AC'
+
 
 class ArticlesSelect extends Component {
     static propTypes = {
@@ -15,7 +17,8 @@ class ArticlesSelect extends Component {
         const options = this.props.articles.map(article => ({
             label: article.title,
             value: article.id
-        }))
+        }));
+        console.log(options)
         return (
             <div>
                 <Select options={options} value={this.state.selected} onChange={this.handleChange} multi={true}/>
@@ -23,9 +26,13 @@ class ArticlesSelect extends Component {
         )
     }
 
-    handleChange = selected => this.setState({
-        selected
-    })
+    handleChange = selected => {
+        this.setState({
+            selected
+        }, () => {
+            this.props.dispatchChange(filterArticle(this.state.selected));
+        });
+    }
 }
 
 export default ArticlesSelect

@@ -7,14 +7,20 @@ import { connect } from 'react-redux'
 class ArticleList extends React.Component {
     render() {
         const {articles, isOpenItem, toggleOpenItem} = this.props
-        const articleElements = articles.map(article =>
-            <li key={article.id}>
-                <Article article={article}
-                         isOpen={isOpenItem(article.id)}
-                         onClick={toggleOpenItem(article.id)}
-                         ref = {this.getArticleRef}
-                />
-            </li>)
+        const articleElements = articles.map(article => {
+            if (article.isShowed || article.isShowed === undefined) {
+
+                return (
+                    <li key={article.id}>
+                        <Article article={article}
+                                 isOpen={isOpenItem(article.id)}
+                                 onClick={toggleOpenItem(article.id)}
+                                 ref={this.getArticleRef}
+                        />
+                    </li>)
+            }
+
+        })
         return (
             <div>
                 <h2>Article List</h2>

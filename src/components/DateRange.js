@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import DayPicker, { DateUtils } from 'react-day-picker'
+import { filterDateArticle } from '../AC'
 import 'react-day-picker/lib/style.css'
 
 class DateRange extends Component {
@@ -9,7 +10,9 @@ class DateRange extends Component {
     }
 
     handleDayClick = (e, day) => {
-        this.setState(DateUtils.addDayToRange(day, this.state))
+        this.setState(DateUtils.addDayToRange(day, this.state), () => {
+            this.props.dispatchChange(filterDateArticle(this.state.from, this.state.to));
+        });
     }
 
     render() {
