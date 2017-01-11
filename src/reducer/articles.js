@@ -7,6 +7,7 @@ export default (articlesState = articles, action) => {
         case DELETE_ARTICLE:
             return articlesState.filter(article => article.id !== payload.id)
 
+            //не делай фильтрацию здесь. просто храни значения фильтров в отдельно редюсере. А пофильтруешь уже в коннекте
         case FILTER_ARTICLE:
             if (payload.selectedArticles.length === 0) {
                 return articlesState.map((article) => {
