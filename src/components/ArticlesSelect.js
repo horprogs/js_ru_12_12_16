@@ -8,7 +8,7 @@ class ArticlesSelect extends Component {
     static propTypes = {
         articles: PropTypes.array
     };
-
+    //от стeйта избавиться, нужные данные теперь должны в сторе жить
     state = {
         selected: null
     }
